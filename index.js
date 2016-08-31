@@ -1,5 +1,7 @@
 'use strict';
 
+const title = document.title;
+
 const vm = new Vue({
   el: '#vue',
   data: {
@@ -20,7 +22,15 @@ const vm = new Vue({
         .sort()
         .reduce((a, cv) => { if (a[a.length-1] !== cv) a.push(cv); return a }, []);
     },
-  }
+  },
+  watch: {
+    actor: (val) => {
+      if (val) {
+        document.title = `${val} - ${title}`;
+        history.replaceState(null, document.title, `?${val}`);
+      }
+    },
+  },
 });
 
 const xhr = new XMLHttpRequest();
@@ -28,3 +38,7 @@ xhr.open('GET', './cards.json');
 xhr.responseType = 'json';
 xhr.send();
 xhr.onload = () => vm.cards = xhr.response;
+
+if (location.search.length > 1) {
+  vm.actor = decodeURIComponent(location.search.substring(1));
+}
