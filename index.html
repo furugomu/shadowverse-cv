@@ -18,8 +18,11 @@ input {
   max-width: 30%;
   padding-bottom: 2em;
 }
-.cards__card img {
+.card img {
   width: 100%;
+}
+.card__cv {
+  font-size: 10px;
 }
   </style>
   <script src=https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.0-rc.4/vue.min.js></script>
@@ -42,9 +45,9 @@ input {
     <div v-if="selectedCards.length === 0">
      ない。
     </div>
-    <div v-for="card in selectedCards" class=cards__card>
+    <div v-for="card in selectedCards" class="cards__card card">
      <span v-if="query !== card.CV">
-      <a @click="query = card.CV">{{card.CV}} &#128269;</a><br>
+      <a @click="query = card.CV" class=card__cv>{{card.CV}}&#128269;</a><br>
      </span>
      <a :href="card.url"><br><img :src="card.images[0]" :alt="card.name"></a>
     </div>
