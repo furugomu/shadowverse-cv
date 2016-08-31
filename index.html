@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset=UTF-8>
+  <title>Shadowverse の声優からカードを探す</title>
+  <meta name="viewport" content="width=device-width">
+  <style>
+input {
+  font-size: 2em;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cards__card {
+  width: 272px;
+}
+.cards__card img {
+  width: 100%;
+}
+  </style>
+  <script src=https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.0-rc.4/vue.min.js></script>
+ </head>
+ <body>
+  <h1><ruby>Shadowverse<rp>(</rp><rt>シャドウバース</rt><rp>)</rp></ruby> の声優からカードを探す</h1>
+  <div id=vue>
+   <section>
+    <p>
+     <input type=search list=actors v-model=actor>
+    </p>
+
+    <datalist id=actors>
+     <option v-for="actor in actors" :value="actor">{{actor}}</option>
+    </datalist>
+
+   </section>
+
+   <section class=cards>
+    <div v-if="selectedCards.length === 0">
+     ない。
+    </div>
+    <div v-for="card in selectedCards" class=cards__card>
+     <a :href="card.url"><img :src="card.images[0]" :alt="card.name"></a>
+    </div>
+   </section>
+
+  </div>
+  <script src=index.js></script>
+ </body>
+</html>
