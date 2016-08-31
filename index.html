@@ -13,8 +13,10 @@ input {
 }
 .cards__card {
   display: inline-block;
+  text-align: center;
   width: 272px;
   max-width: 30%;
+  padding-bottom: 2em;
 }
 .cards__card img {
   width: 100%;
@@ -27,7 +29,7 @@ input {
   <div id=vue>
    <section>
     <p>
-     <input type=search list=actors v-model=actor>
+     <input type=search list=actors v-model=query>
     </p>
 
     <datalist id=actors>
@@ -41,7 +43,10 @@ input {
      ない。
     </div>
     <div v-for="card in selectedCards" class=cards__card>
-     <a :href="card.url"><img :src="card.images[0]" :alt="card.name"></a>
+     <span v-if="query !== card.CV">
+      <a @click="query = card.CV">{{card.CV}} &#128269;</a><br>
+     </span>
+     <a :href="card.url"><br><img :src="card.images[0]" :alt="card.name"></a>
     </div>
    </section>
 

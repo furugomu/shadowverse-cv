@@ -6,14 +6,15 @@ const vm = new Vue({
   el: '#vue',
   data: {
     cards: [],
-    actor: '水橋かおり',
+    query: '水橋かおり',
   },
 
   computed: {
     selectedCards() {
-      this.cards, this.actor;
-      if (this.actor === '') return [];
-      return this.cards.filter((card) => card.CV.indexOf(this.actor) >= 0);
+      this.cards, this.query;
+      if (this.query === '') return [];
+      return this.cards.filter((card) =>
+        card.CV.indexOf(this.query) >= 0 || card.name.indexOf(this.query) >= 0);
     },
     actors() {
       return this.cards
@@ -24,7 +25,7 @@ const vm = new Vue({
     },
   },
   watch: {
-    actor: (val) => {
+    query: (val) => {
       if (val) {
         document.title = `${val} - ${title}`;
         history.replaceState(null, document.title, `?${val}`);
@@ -37,8 +38,8 @@ const xhr = new XMLHttpRequest();
 xhr.open('GET', './cards.json');
 xhr.responseType = 'json';
 xhr.send();
-xhr.onload = () => vm.cards = xhr.response;
+xhr.onload = () => vm.cards = xhr.response.filter((card) => card.CV !== '-');
 
 if (location.search.length > 1) {
-  vm.actor = decodeURIComponent(location.search.substring(1));
+  vm.query = decodeURIComponent(location.search.substring(1));
 }

@@ -6,17 +6,17 @@ var vm = new Vue({
   el: '#vue',
   data: {
     cards: [],
-    actor: '水橋かおり'
+    query: '水橋かおり'
   },
 
   computed: {
     selectedCards: function selectedCards() {
       var _this = this;
 
-      this.cards, this.actor;
-      if (this.actor === '') return [];
+      this.cards, this.query;
+      if (this.query === '') return [];
       return this.cards.filter(function (card) {
-        return card.CV.indexOf(_this.actor) >= 0;
+        return card.CV.indexOf(_this.query) >= 0 || card.name.indexOf(_this.query) >= 0;
       });
     },
     actors: function actors() {
@@ -30,7 +30,7 @@ var vm = new Vue({
     }
   },
   watch: {
-    actor: function actor(val) {
+    query: function query(val) {
       if (val) {
         document.title = val + ' - ' + title;
         history.replaceState(null, document.title, '?' + val);
@@ -44,9 +44,11 @@ xhr.open('GET', './cards.json');
 xhr.responseType = 'json';
 xhr.send();
 xhr.onload = function () {
-  return vm.cards = xhr.response;
+  return vm.cards = xhr.response.filter(function (card) {
+    return card.CV !== '-';
+  });
 };
 
 if (location.search.length > 1) {
-  vm.actor = decodeURIComponent(location.search.substring(1));
+  vm.query = decodeURIComponent(location.search.substring(1));
 }
