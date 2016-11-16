@@ -11,12 +11,16 @@ input {
 }
 .cards {
 }
-.cards__card {
+.cards__item {
   display: inline-block;
-  text-align: center;
   width: 272px;
-  max-width: 30%;
-  padding-bottom: 2em;
+  max-width: 33%;
+}
+.card {
+  background: #f0f0f0;
+  margin: 5px;
+  padding: 5px;
+  color: black;
 }
 .card img {
   width: 100%;
@@ -45,11 +49,11 @@ input {
     <div v-if="selectedCards.length === 0">
      ない。
     </div>
-    <div v-for="card in selectedCards" class="cards__card card">
-     <span v-if="query !== card.CV">
-      <a @click="query = card.CV" class=card__cv>{{card.CV}}&#128269;</a><br>
-     </span>
-     <a :href="card.url"><br><img :src="card.images[0]" :alt="card.name"></a>
+    <div v-for="card in selectedCards" class="cards__item">
+     <div class=card>
+      <div><a :href="card.url"><img :src="card.images[0]" :alt="card.name"></a></div>
+      <div>{{card.CV}}</div>
+     </div>
     </div>
    </section>
 
